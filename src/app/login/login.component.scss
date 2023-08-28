@@ -1,0 +1,36 @@
+@import "../../assets/css/common.scss";
+mat-grid-tile {
+    background: white;
+}
+
+.item {
+    padding-top: 15px;
+    input {
+        padding: 10px;
+        min-width: 260px;
+    }
+    button {
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+}
+
+.right {
+    text-align: right;
+}
+
+@media (max-width: 768px) {
+    #box-login {
+        min-height: 500px;
+    }
+}
+
+.admin-form {
+    min-width: 320px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.admin-full-width {
+    width: 100%;
+}

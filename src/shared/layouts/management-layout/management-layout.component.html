@@ -1,0 +1,88 @@
+<div class="management-container">
+    <mat-toolbar class="management-toolbar" color="primary">
+        <nav class="nav">
+            <div class="menu">
+                <button
+                    class="
+                        mat-focus-indicator
+                        docs-button
+                        mat-button mat-button-base
+                    "
+                    aria-label="Menu"
+                    mat-button
+                    [matMenuTriggerFor]="animals"
+                >
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <mat-menu #animals="matMenu">
+                    <button mat-menu-item (click)="goToList()">
+                        <h3 class="inline-block">教材一覧</h3>
+                    </button>
+                    <button mat-menu-item [matMenuTriggerFor]="vertebrates">
+                        <h3
+                            class="inline-block"
+                            (click)="goToSetting()"
+                            style="
+                                margin-bottom: 0px !important;
+                                padding-right: 40px;
+                            "
+                        >
+                            設定
+                        </h3>
+                    </button>
+                </mat-menu>
+
+                <mat-menu #vertebrates="matMenu">
+                    <button (click)="goToSetting()" mat-menu-item>
+                        前後時間設定
+                    </button>
+                </mat-menu>
+            </div>
+            <a
+                mat-button=""
+                routerlink="/"
+                aria-label=""
+                class="
+                    mat-focus-indicator
+                    docs-button
+                    mat-button mat-button-base
+                "
+                tabindex="0"
+                aria-disabled="false"
+                href="javascript:void(0)"
+                (click)="goTo()"
+                ><span class="mat-button-wrapper"
+                    ><span>{{ title }}</span></span
+                ><span matripple="" class="mat-ripple mat-button-ripple"></span
+                ><span class="mat-button-focus-overlay"></span
+            ></a>
+            <div class="flex-spacer"></div>
+
+            <a
+                mat-button=""
+                routerlink="/"
+                aria-label=""
+                class="
+                    mat-focus-indicator
+                    docs-button
+                    mat-button mat-button-base
+                "
+                tabindex="0"
+                aria-disabled="false"
+                href="javascript:void(0)"
+                (click)="logout()"
+                ><span class="mat-button-wrapper"><span>ログアウト</span></span
+                ><span matripple="" class="mat-ripple mat-button-ripple"></span
+                ><span class="mat-button-focus-overlay"></span
+            ></a>
+        </nav>
+    </mat-toolbar>
+
+    <mat-sidenav-container class="management-sidenav-container">
+        <mat-sidenav-content>
+            <div class="body">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</div>

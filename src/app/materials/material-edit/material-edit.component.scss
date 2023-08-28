@@ -1,0 +1,29 @@
+@import "../../../assets/css/common.scss";
+
+.admin-form {
+    min-width: 320px;
+    max-width: 500px;
+    width: 100%;
+    span {
+        margin: 10px;
+    }
+    .time {
+        width: 60px;
+        margin: 0px 10px;
+    }
+}
+
+.admin-full-width {
+    width: 100%;
+}
+
+.bottom{
+    padding-top: 30px;
+    .left{
+        float:left;
+        margin-right: 20px;
+    }
+    .right{
+        float:right;
+    }
+}

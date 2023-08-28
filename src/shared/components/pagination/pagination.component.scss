@@ -1,0 +1,21 @@
+@import "../../../assets/css/common.scss";
+
+span{
+    color: $admin-link-color;
+    margin-right:5px;
+}
+ul{
+    list-style: none;
+    border-bottom: 1px solid $admin-link-color;
+    display: inline-block;
+    padding: 0px;
+    li{
+        display: inline-block;
+        margin-left:5px;
+        span{
+            color: $admin-link-color;
+            cursor: pointer;
+        }
+    }
+
+}

@@ -1,0 +1,430 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-9">
+            <div class="row">
+                <div class="col-1" style="max-width: 10%">
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>ユーザー</mat-label>
+                        <mat-select
+                            [(ngModel)]="user"
+                            (selectionChange)="search()"
+                        >
+                            <mat-option>お選び下さい</mat-option>
+                            <mat-option
+                                *ngFor="let user of users"
+                                [value]="user.id"
+                            >
+                                {{ user.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-1" style="max-width: 10%">
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>カテゴリー</mat-label>
+                        <mat-select
+                            [(ngModel)]="category"
+                            (selectionChange)="search()"
+                        >
+                            <mat-option>お選び下さい</mat-option>
+                            <mat-option
+                                *ngFor="let category of categories"
+                                [value]="category.id"
+                            >
+                                {{ category.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-1" style="max-width: 10%">
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>英語レベル </mat-label>
+                        <mat-select
+                            [(ngModel)]="level"
+                            (selectionChange)="search()"
+                            multiple
+                        >
+                            <mat-option
+                                *ngFor="let level of levels"
+                                [value]="level.id"
+                            >
+                                {{ level.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-1" style="max-width: 10%">
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>対象年齢</mat-label>
+                        <mat-select
+                            [(ngModel)]="target_age"
+                            (selectionChange)="search()"
+                            multiple
+                        >
+                            <mat-option
+                                *ngFor="let target_age of target_ages"
+                                [value]="target_age.id"
+                            >
+                                {{ target_age.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-2" style="max-width: 20%">
+                    <mat-form-field style="z-index: 99999999">
+                        <input
+                            matInput
+                            placeholder="登録日"
+                            [satDatepicker]="picker"
+                            (dateChange)="changeCreatedDate($event)"
+                            style="font-size: 14px"
+                        />
+                        <sat-datepicker
+                            #picker
+                            [rangeMode]="true"
+                        ></sat-datepicker>
+                        <sat-datepicker-toggle
+                            matSuffix
+                            [for]="picker"
+                        ></sat-datepicker-toggle>
+                    </mat-form-field>
+                </div>
+                <div class="col-2" style="max-width: 20%">
+                    <mat-form-field style="z-index: 9999999">
+                        <input
+                            matInput
+                            placeholder="更新日"
+                            [satDatepicker]="picker2"
+                            (dateChange)="changeUpdatedDate($event)"
+                            style="font-size: 14px"
+                        />
+                        <sat-datepicker
+                            #picker2
+                            [rangeMode]="true"
+                        ></sat-datepicker>
+                        <sat-datepicker-toggle
+                            matSuffix
+                            [for]="picker2"
+                        ></sat-datepicker-toggle>
+                    </mat-form-field>
+                </div>
+                <div
+                    class="col-2"
+                    style="
+                        padding-top: 22px;
+                        min-width: 20%;
+                        padding-right: 0px;
+                    "
+                >
+                    <mat-radio-group
+                        aria-label="教材名"
+                        [(ngModel)]="language_name"
+                        style="float: right"
+                    >
+                        <mat-label style="margin-right: 22px">教材名</mat-label>
+                        <mat-radio-button
+                            value="1"
+                            style="margin-right: 12px"
+                            (change)="changeLanguageName($event)"
+                            >日本語</mat-radio-button
+                        >
+                        <mat-radio-button
+                            value="2"
+                            (change)="changeLanguageName($event)"
+                            >英語</mat-radio-button
+                        >
+                    </mat-radio-group>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-3 col-3">
+            <div class="row">
+                <div class="col-9">
+                    <mat-form-field class="admin-full-width">
+                        <mat-label></mat-label>
+                        <input
+                            matInput
+                            type="text"
+                            placeholder="フリーワード検索"
+                            [(ngModel)]="keyword"
+                            [ngModelOptions]="{ standalone: true }"
+                        />
+                        <button (click)="search()" mat-icon-button matSuffix>
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </div>
+                <div class="col-3 group-right">
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        class="btn-admin-primary"
+                        (click)="goToCreate()"
+                    >
+                        教材登録
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-sm-12">
+            <div class="right-content">
+                <div class="mat-elevation-z8">
+                    <mat-paginator
+                        (page)="handlePageEvent($event)"
+                        [length]="length"
+                        [pageSize]="pageSize"
+                        [showFirstLastButtons]="showFirstLastButtons"
+                        [pageSizeOptions]="pageSizeOptions"
+                        [pageIndex]="pageIndex"
+                        showFirstLastButtons
+                    ></mat-paginator>
+                    <table mat-table [dataSource]="dataSource" matSort>
+                        <!-- ID Column -->
+                        <ng-container matColumnDef="id">
+                            <th
+                                style="min-width: 50px"
+                                class="left"
+                                mat-header-cell
+                                *matHeaderCellDef
+                            >
+                                ID
+                            </th>
+                            <td
+                                style="min-width: 50px"
+                                mat-cell
+                                *matCellDef="let element"
+                            >
+                                {{ element.id }}
+                            </td>
+                        </ng-container>
+                        <!-- User Column -->
+                        <ng-container matColumnDef="user">
+                            <th
+                                style="min-width: 50px"
+                                class="left"
+                                mat-header-cell
+                                *matHeaderCellDef
+                            >
+                                ユーザー
+                            </th>
+                            <td
+                                style="min-width: 50px"
+                                mat-cell
+                                *matCellDef="let element"
+                            >
+                                {{ element.users }}
+                            </td>
+                        </ng-container>
+                        <!-- Category Column -->
+                        <ng-container matColumnDef="category">
+                            <th
+                                style="min-width: 50px"
+                                class="left"
+                                mat-header-cell
+                                *matHeaderCellDef
+                            >
+                                カテゴリー
+                            </th>
+                            <td
+                                style="min-width: 50px"
+                                mat-cell
+                                *matCellDef="let element"
+                            >
+                                {{ element.category }}
+                            </td>
+                        </ng-container>
+                        <!-- Category Column -->
+                        <ng-container matColumnDef="sub_category">
+                            <th
+                                style="min-width: 50px"
+                                class="left"
+                                mat-header-cell
+                                *matHeaderCellDef
+                            >
+                                サブカテゴリー
+                            </th>
+                            <td
+                                style="min-width: 50px"
+                                mat-cell
+                                *matCellDef="let element"
+                            >
+                                {{ element.sub_category }}
+                            </td>
+                        </ng-container>
+                        <!-- Name Column -->
+                        <ng-container matColumnDef="name">
+                            <th
+                                class="left"
+                                mat-header-cell
+                                *matHeaderCellDef
+                                mat-sort-header
+                            >
+                                教材名
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div
+                                    style="
+                                        white-space: nowrap;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                        padding-right: 10px;
+                                    "
+                                    [ngStyle]="{
+                                        maxWidth:
+                                            innerWidth > 1259 ? '20vw' : '10vw'
+                                    }"
+                                >
+                                    {{ element.name }}
+                                </div>
+                            </td>
+                        </ng-container>
+                        <!-- Lesson name Column -->
+                        <ng-container matColumnDef="lesson_name">
+                            <th
+                                style="min-width: 50px"
+                                class="left"
+                                mat-header-cell
+                                *matHeaderCellDef
+                                mat-sort-header
+                            >
+                                Lesson名
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                                <div
+                                    style="
+                                        white-space: nowrap;
+                                        overflow: hidden;
+                                        text-overflow: ellipsis;
+                                        padding-right: 10px;
+                                    "
+                                    [ngStyle]="{
+                                        maxWidth:
+                                            innerWidth > 1259 ? '20vw' : '10vw'
+                                    }"
+                                >
+                                    {{ element.lesson_name }}
+                                </div>
+                            </td>
+                        </ng-container>
+                        <!-- Target age Column -->
+                        <ng-container matColumnDef="target_age">
+                            <th
+                                style="min-width: 50px"
+                                class="left"
+                                mat-header-cell
+                                *matHeaderCellDef
+                            >
+                                対象年齢
+                            </th>
+                            <td
+                                style="min-width: 50px"
+                                mat-cell
+                                *matCellDef="let element"
+                            >
+                                <span
+                                    *ngFor="
+                                        let target_age of element.target_ages
+                                    "
+                                    ><p>{{ target_age }}</p>
+                                </span>
+                            </td>
+                        </ng-container>
+                        <!-- Level Column -->
+                        <ng-container matColumnDef="level">
+                            <th
+                                style="min-width: 50px"
+                                class="left"
+                                mat-header-cell
+                                *matHeaderCellDef
+                            >
+                                英語レベル
+                            </th>
+                            <td
+                                style="min-width: 50px"
+                                mat-cell
+                                *matCellDef="let element"
+                            >
+                                <span *ngFor="let level of element.levels"
+                                    ><p>{{ level }}</p>
+                                </span>
+                            </td>
+                        </ng-container>
+                        <!-- Created Column -->
+                        <ng-container matColumnDef="created_at">
+                            <th mat-header-cell *matHeaderCellDef class="left">
+                                <label (click)="sort($event, 'created_at')"
+                                    >登録日</label
+                                >
+                            </th>
+                            <td
+                                style="min-width: 77px"
+                                mat-cell
+                                *matCellDef="let element"
+                            >
+                                {{ element.created_at }}
+                            </td>
+                        </ng-container>
+                        <!-- Updated Column -->
+                        <ng-container matColumnDef="updated_at">
+                            <th
+                                class="left"
+                                mat-header-cell
+                                *matHeaderCellDef
+                                mat-sort-header
+                            >
+                                <label (click)="sort($event, 'updated_at')"
+                                    >更新日</label
+                                >
+                            </th>
+                            <td
+                                class="left"
+                                style="min-width: 77px"
+                                mat-cell
+                                *matCellDef="let element"
+                            >
+                                {{ element.updated_at }}
+                            </td>
+                        </ng-container>
+                        <!-- Updated Column -->
+                        <ng-container matColumnDef="edit">
+                            <th mat-header-cell *matHeaderCellDef>編集</th>
+                            <td
+                                class="center"
+                                style="cursor: pointer"
+                                (click)="detail(element.id)"
+                                mat-cell
+                                *matCellDef="let element"
+                            >
+                                <button
+                                    (click)="detail(element.id)"
+                                    mat-icon-button
+                                    matSuffix
+                                >
+                                    <mat-icon>read_more</mat-icon>
+                                </button>
+                            </td>
+                        </ng-container>
+                        <tr
+                            mat-header-row
+                            *matHeaderRowDef="displayedColumns"
+                        ></tr>
+                        <tr
+                            mat-row
+                            *matRowDef="let row; columns: displayedColumns"
+                        ></tr>
+                    </table>
+
+                    <mat-paginator
+                        (page)="handlePageEvent($event)"
+                        [length]="length"
+                        [pageSize]="pageSize"
+                        [showFirstLastButtons]="showFirstLastButtons"
+                        [pageSizeOptions]="pageSizeOptions"
+                        [pageIndex]="pageIndex"
+                        showFirstLastButtons
+                    ></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

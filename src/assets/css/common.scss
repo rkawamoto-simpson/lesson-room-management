@@ -1,0 +1,47 @@
+@import "./variables.scss";
+.btn-admin-primary {
+    background-color: $admin-primary;
+    color: #fff;
+}
+
+.btn-admin-danger {
+    background-color: $admin-danger;
+    color: #fff;
+}
+
+.timeEntry-control {
+    display: none !important;
+}
+th {
+    font-weight: normal;
+}
+
+th {
+    background-color: $admin-primary;
+    color: white;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    min-height: 32px;
+    text-align: center !important;
+}
+
+.btn-action {
+    padding: 0px 35px;
+}
+
+.w-50 {
+    width: 50% !important;
+}
+
+.link-primary {
+    color: $admin-primary;
+    cursor: pointer;
+}
+.center {
+    text-align: center;
+}
+
+h3 {
+    margin: 0;
+    margin-bottom: 20px;
+}

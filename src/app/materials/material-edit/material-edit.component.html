@@ -1,0 +1,192 @@
+<div>
+    <div class="row">
+        <div class="col-lg-12" style="text-align: center">
+            <h3>教材編集・削除</h3>
+            <div style="width: 25%; display: inline-block">
+                <form
+                    class="admin-form"
+                    style="text-align: left"
+                    [formGroup]="form"
+                >
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>教材ID</mat-label>
+                        <input
+                            formControlName="materials_id"
+                            matInput
+                            type="text"
+                            readonly
+                            placeholder="名前ID"
+                            value=""
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>ユーザー</mat-label>
+                        <mat-select formControlName="user" required>
+                            <mat-option>お選び下さい</mat-option>
+                            <mat-option
+                                *ngFor="let user of users"
+                                [value]="user.id"
+                            >
+                                {{ user.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>カテゴリー</mat-label>
+                        <mat-select formControlName="category" required>
+                            <mat-option>お選び下さい</mat-option>
+                            <mat-option
+                                *ngFor="let category of categories"
+                                [value]="category.id"
+                            >
+                                {{ category.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>サブカテゴリー</mat-label>
+                        <input
+                            formControlName="sub_category"
+                            matInput
+                            type="text"
+                            placeholder="サブカテゴリー"
+                            value=""
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>対象年齢</mat-label>
+                        <mat-select
+                            formControlName="target_ages"
+                            multiple
+                            required
+                        >
+                            <mat-option
+                                *ngFor="let target_age of target_ages"
+                                [value]="target_age.id"
+                            >
+                                {{ target_age.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>Lesson名</mat-label>
+                        <input
+                            formControlName="lesson_name"
+                            matInput
+                            type="text"
+                            placeholder="Lesson名"
+                            value=""
+                            required
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>英語レベル </mat-label>
+                        <mat-select formControlName="levels" multiple required>
+                            <mat-option
+                                *ngFor="let level of levels"
+                                [value]="level.id"
+                            >
+                                {{ level.name }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>教材名(日本語)</mat-label>
+                        <input
+                            formControlName="name_ja"
+                            matInput
+                            type="text"
+                            placeholder="教材名(日本語)"
+                            value=""
+                            required
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>教材名(英語)</mat-label>
+                        <input
+                            formControlName="name_en"
+                            matInput
+                            type="text"
+                            placeholder="教材名(英語)"
+                            value=""
+                            required
+                        />
+                    </mat-form-field>
+
+                    <mat-form-field class="admin-full-width">
+                        <mat-label>教材</mat-label>
+                        <input
+                            id="file"
+                            type="file"
+                            (change)="onFileChange($event)"
+                            style="display: none"
+                            formControlName="file"
+                            accept=".pdf"
+                        />
+                        <input
+                            readonly
+                            matInput
+                            type="text"
+                            [value]="fileName"
+                            placeholder="ファイル名．拡張子"
+                            value=""
+                        />
+                        <button
+                            mat-raised-button
+                            matSuffix
+                            class="btn-admin-primary"
+                            color="primary"
+                            style="padding: 0px"
+                        >
+                            <label
+                                style="
+                                    display: inline-block;
+                                    padding: 0px 16px;
+                                    cursor: pointer;
+                                "
+                                for="file"
+                                >ファイルを選択</label
+                            >
+                        </button>
+                    </mat-form-field>
+
+                    <div class="bottom">
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            class="btn-admin-primary left"
+                            [routerLink]="['/teaching-material/list']"
+                        >
+                            戻る
+                        </button>
+                        <button
+                            mat-raised-button
+                            color="danger"
+                            class="btn-admin-danger left"
+                            (click)="remove()"
+                        >
+                            削除
+                        </button>
+                        <button
+                            mat-raised-button
+                            color="primary"
+                            class="btn-admin-primary right"
+                            [disabled]="form.invalid"
+                            (click)="edit()"
+                        >
+                            変更
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

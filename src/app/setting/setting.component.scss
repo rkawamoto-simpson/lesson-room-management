@@ -1,0 +1,89 @@
+@import "../../assets/css/common.scss";
+.menu {
+    position: relative;
+    .box-menu {
+        position: absolute;
+        width: 300px;
+        z-index: 9;
+        animation: fadeIn 0.5s ease-in;
+        h3 {
+            cursor: pointer;
+        }
+    }
+}
+.l-10 {
+    padding-left: 10px;
+}
+.l-20 {
+    padding-left: 20px;
+}
+.sub {
+    padding-left: 25px;
+}
+.admin-form {
+    padding-left: 50px;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.item {
+    padding-bottom: 15px;
+    width: 100%;
+    input {
+        padding: 10px;
+        width: 97%;
+    }
+    button {
+        margin-top: 10px;
+        border-radius: 10px;
+    }
+}
+.inline-block {
+    display: inline-block;
+    position: relative;
+    .icon {
+        position: absolute;
+        font-size: 27px;
+        padding-left: 20px;
+    }
+}
+.right {
+    text-align: right;
+    button {
+        margin-left: 10px;
+        border-radius: 10px;
+        margin-bottom: 10px;
+    }
+}
+.group-right {
+    text-align: right;
+    padding-top: 15px;
+    button {
+        margin-right: 10px;
+    }
+}
+table {
+    width: 100%;
+    .left {
+        text-align: left !important;
+    }
+}
+.right-content {
+    padding-left: 10%;
+    padding-right: 5%;
+}
+
+.admin-form {
+    max-width: 500px;
+    width: 100%;
+}
+
+.admin-full-width {
+    width: 100%;
+}

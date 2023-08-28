@@ -1,0 +1,19 @@
+<mat-dialog-content align="center" style="width: 75vw; max-width: 500px">
+    <div style="min-height: 100px">
+        <h3 style="text-align: left">{{ data?.title }}</h3>
+        <p class="text-notify">{{ data.message }}</p>
+    </div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="center">
+    <button
+        mat-button
+        mat-dialog-close
+        [mat-dialog-close]="true"
+        class="btn btn-primary-custom"
+        (click)="onConfirmFinish(true)"
+        id="btn-custom"
+    >
+        戻る
+    </button>
+</mat-dialog-actions>

@@ -1,0 +1,47 @@
+<mat-grid-list cols="1" rowHeight="1:0.5">
+    <mat-grid-tile id="box-login">
+        <div>
+            <form class="admin-form" [formGroup]="formLogin">
+                <div style="text-align: center">
+                    <h3>教材管理/設定　ログイン</h3>
+                </div>
+                <mat-form-field class="admin-full-width">
+                    <mat-label>メールアドレス</mat-label>
+                    <input
+                        matInput
+                        type="email"
+                        formControlName="email"
+                        placeholder="メールアドレス"
+                        value=""
+                    />
+                </mat-form-field>
+                <mat-form-field class="admin-full-width">
+                    <mat-label>パスワード</mat-label>
+                    <input
+                        matInput
+                        formControlName="password"
+                        type="password"
+                        placeholder="パスワード"
+                        value=""
+                    />
+                </mat-form-field>
+                <div class="admin-full-width" *ngIf="message !== ''">
+                    <label style="color: red; font-size: 13px">
+                        メールアドレスまたはパスワードが違います。
+                    </label>
+                </div>
+                <div class="item center">
+                    <button
+                        mat-raised-button
+                        color="primary"
+                        class="btn-admin-primary"
+                        (click)="login()"
+                        [disabled]="formLogin.invalid"
+                    >
+                        ログイン
+                    </button>
+                </div>
+            </form>
+        </div>
+    </mat-grid-tile>
+</mat-grid-list>
